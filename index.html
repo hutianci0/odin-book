@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./bookstyle.css">
+</head>
+
+<body>
+  <div class="shelf">
+    <h3>Your bookshelf</h3>
+    <div class="container"></div>
+  </div>
+
+  <dialog class="dialog">
+    <form>
+      <label for="author">author</label>
+      <input type="text" placeholder="enter author" name="author" id="author" autofocus />
+      <label for="title">title</label>
+      <input type="text" placeholder="enter title" name="title" id="title" />
+      <label for="page">page</label>
+      <input type="text" placeholder="enter page" name="page" id="page" />
+      <fieldset>
+        <legend>isRead</legend>
+        <label for="true">true</label>
+        <input type="radio" id="true" name="isRead" value="true" />
+        <label for="false">false</label>
+        <input type="radio" id="false" name="isRead" value="false" />
+      </fieldset>
+
+      <button class="delbtn" type="reset" class="reset" value="default">cancel</button>
+      <button class="delbtn" type="submit" class="confirm" value="default" formmethod="dialog"> confirm</button>
+    </form>
+  </dialog>
+  <button type="button" class="open">add a book</button>
+
+
+  <script src="./bookobj.js"></script>
+</body>
+
+</html>

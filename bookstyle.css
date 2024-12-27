@@ -1,0 +1,65 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.shelf {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.shelf h3 {
+  text-align: center;
+}
+
+
+.container {
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px 
+}
+
+.container .book_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  color: white;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px #cbd5e1;;
+  border-radius: 25px;
+  width: 250px;
+  height: 150px;
+  padding:10px
+}
+
+.buttons{
+  margin-top: 20px;
+  display: flex;
+  width: auto;
+  gap: 10px;
+}
+
+.delbtn{
+  width: 200px;
+  height: 20px;
+}
+
+.dialog{
+  margin: auto auto;
+  width: 600px;
+  padding: 10px;
+}
+.dialog input{
+  display: block;
+  margin-bottom: 10px;
+}
+
+.dialog ::backdrop{
+
+    background-color: rgba(0, 0, 0, 0.4);
+  
+}
