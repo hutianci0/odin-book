@@ -1,86 +1,109 @@
+// let count = 0
+// const myLibrary = [];
+
+// function Book(author, title, page, isread) {
+//   // the constructor
+//   this.author = author
+//   this.title = title
+//   this.page = page
+//   this.isread = isread
+//   this.id = count++
+//   this.idDel = false
+// }
 let count = 0
-const myLibrary = [];
+class mybook {
 
-function Book(author, title, page, isread) {
-  // the constructor
-  this.author = author
-  this.title = title
-  this.page = page
-  this.isread = isread
-  this.id = count++
-  this.idDel = false
+  constructor(author, title, page, isread) {
+    this.author = author
+    this.title = title
+    this.page = page
+    this.isread = isread
+    this.id = count++
+    this.idDel = false
+  }
 }
 
-
-// test obj
-let test1 = new Book("LDR", "BTD", "1", true)
-addBookToLibrary(test1)
-
-
-// add book
-function addBookToLibrary(bookobj) {
-  // add book obj to library 
-  myLibrary.push(bookobj)
-  render(myLibrary)
-}
-
-function render(List) {
-  const bookshelf = document.querySelector('.container')
-  bookshelf.innerHTML = ''
-  // dispaly
-  List.forEach(ele => {
-    const { author, title, page, isread, isDel } = ele
-    // create elements and structure
-    const book_item = document.createElement('div')
-    const book_title = document.createElement('p')
-    const book_author = document.createElement('span')
-    const book_page = document.createElement('span')
-
-    const buttons = document.createElement('div')
-    const delbtn = document.createElement('button')
-    const changeRead = document.createElement('button')
-    const buttonsList = [delbtn, changeRead]
-    buttonsList.forEach(ele => buttons.appendChild(ele))
-
-    // appendChild with multiple elements : loop through arr
-    const childNodeList = [book_title, book_author, book_page, buttons]
-    childNodeList.forEach(ele => book_item.appendChild(ele))
-    bookshelf.appendChild(book_item)
+class myLibrary {
+  constructor() {
+    this.books = []
+  }
 
 
-    // add corresponding content
-    book_author.textContent = "Author: " + author
-    book_title.innerText = "Title:" + title
-    book_page.innerHTML = "Page No.: " + page
-    delbtn.innerText = 'delete'
-    changeRead.innerText = 'read status'
+  // add book
+  addBook(obj) {
+    this.books.push(obj)
+    this.render(this.books)
+  }
 
-    // add eventListner for deleting
-    delbtn.addEventListener("click", () => {
-      ele.isDel = true
-      render(myLibrary)
+  // removeBook
+  removeBook(id) {
+    this.books = this.books.filter(ele => ele.id !== id)
+    this.render(this.books)
+  }
+
+  isread(id) {
+    const book = this.books.find(item => item.id === id)
+    if (book) book.isread = !book.isread
+    this.render()
+  }
+
+  render() {
+    const bookshelf = document.querySelector('.container')
+    bookshelf.innerHTML = ''
+    // dispaly
+    this.books.forEach(ele => {
+      const { author, title, page, isread, isDel, id } = ele
+      // create elements and structure
+      const book_item = document.createElement('div')
+      book_item.classList.add('book_item');
+      // isred color
+      book_item.style.backgroundColor = isread ? 'pink' : 'blue';
+
+      book_item.innerHTML = `
+      <p>Title: ${title}</p>
+      <span>Author: ${author}</span>
+      <span>Page No.: ${page}</span>
+      <div class="buttons">
+        <button class="delbtn" data-id="${id}">Delete</button>
+        <button class="readbtn" data-id="${id}">Read Status</button>
+      </div>
+    `;
+
+      bookshelf.appendChild(book_item);
+
+      // delbtn
+      document.querySelectorAll('.delbtn').forEach(button => {
+        button.addEventListener('click', () => {
+          const id = parseInt(button.dataset.id, 10);
+          this.removeBook(id);
+        });
+      });
+
+      document.querySelectorAll('.readbtn').forEach(button => {
+        button.addEventListener('click', () => {
+          const id = parseInt(button.dataset.id, 10);
+          this.isread(id);
+        });
+      });
+
+
+
+
+
+
     })
-
-    changeRead.addEventListener('click', () => {
-      ele.isread = !isread
-      render(myLibrary)
-
-    })
+  }
 
 
-
-    // isred color
-    isread ? book_item.style.backgroundColor = 'pink' : book_item.style.backgroundColor = 'blue'
-    isDel ? book_item.style.display = 'none' : ''
-
-    // styling
-    buttons.classList.add('buttons')
-    delbtn.classList.add('delbtn')
-    changeRead.classList.add('delbtn')
-    book_item.classList.add('book_item')
-
-  })
 }
+
+
+const mylib = new myLibrary()
+
+// test1
+mylib.addBook(new mybook('LDR', 'BTD', 1, 'true'))
+
+
 
 
 
@@ -111,10 +134,10 @@ confirmbtn.addEventListener("click", () => {
   const author = formData.get('author');
   const title = formData.get('title');
   const page = formData.get('page');
-  const isread = formData.get('isRead') === 'true'; // Ensure boolean value
+  const isread = formData.get('isread') === 'true'; // Ensure boolean value
 
-  let newBook = new Book(author, title, page, isread)
-  addBookToLibrary(newBook)
+  const newBook = new mybook(author, title, page, isread)
+  mylib.addBook(newBook)
 
   form.reset()
 
